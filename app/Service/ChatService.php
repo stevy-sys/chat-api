@@ -59,7 +59,13 @@ class ChatService
 
         $conversationGroupe = Conversation::where('type','groupe')->whereHas('membres',function ($q) use($auth) {
             $q->where('user_id',$auth->id);
-        })->with('lastMessage','membres')->get();
+        })->with('lastMessage','membres')->orderByDesc(function ($query) {
+            $query->select('created_at')
+                ->from('messages')
+                ->whereColumn('conversation_id', 'conversations.id')
+                ->orderBy('created_at', 'desc')
+                ->limit(1);
+        })->get();
         
         return compact('conversationPrive','conversationGroupe') ;
     }
