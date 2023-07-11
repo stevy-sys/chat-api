@@ -18,25 +18,30 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
-        $email = User::where('email',$request->input('email'))->first();
-        $error = [] ;
-        if (!isset($email)) {
-            $error[] = "email n'existe pas";
-            return $this->sendError('erreur email',$error,401);
+        try {
+            $email = User::where('email',$request->input('email'))->first();
+            $error = [] ;
+            if (!isset($email)) {
+                $error[] = "email n'existe pas";
+                return $this->sendResponse(false,$error,'erreur email');
+            }
+        
+            if (Auth::attempt($request->all())) {
+                $user = Auth::user();
+                return  $this->finalResponse($user);
+            }
+            $error[] = "mot de passe invalide";
+            return $this->sendResponse(false,$error,'erreur password');
+            
+        } catch (\Throwable $th) {
+            return $this->sendError($th->getMessage(),[],500);
         }
-    
-        if (Auth::attempt($request->all())) {
-            $user = Auth::user();
-            return  $this->finalResponse($user);
-        }
-        $error[] = "mot de passe invalide";
-        return $this->sendError('erreur password',$error,401);
     }
 
     public function register(Request $request) {
         $error = $this->authService->validateRegister($request);
         if (count($error) > 0) {
-            return $this->sendError('erreur inscription',$error,401);
+            return $this->sendResponse(false,$error,'erreur inscription');
         }
         $user = $this->authService->createUser($request->name,$request->email,$request->password);
         return  $this->finalResponse($user);
@@ -44,7 +49,7 @@ class AuthController extends Controller
 
     private function finalResponse($user) {
         $token = $this->authService->createToken($user);
-        return $this->sendResponse(compact('user','token'),'user connected'); 
+        return $this->sendResponse(true,compact('user','token'),'user connected'); 
     }
 
     public function notAuth() {

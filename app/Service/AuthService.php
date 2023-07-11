@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService 
 {
-   
-
     public function validateRegister($request) : Array
     {
         $error = [] ;
