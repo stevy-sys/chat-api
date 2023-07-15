@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Conversation;
 use App\Models\User;
+use App\Events\NewMessage;
+use App\Models\Conversation;
 use App\Service\ChatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,7 @@ class ChatController extends Controller
 
     public function createMessage(Request $request) {
         $message = null ;
+        $conversation = null;
         if (!isset($request->conversation_id)) {
             $conversation = $this->chatService->createConversation($request->name,$request->type);
             $membres[] = ['user_id' => Auth::id()] ;
@@ -45,7 +47,17 @@ class ChatController extends Controller
             $conversation = Conversation::find($request->conversation_id);
             $message = $this->chatService->createMessage($conversation,$request->message,Auth::user());
         }
-        $message = $message->load('user');
+        $message = $message->load(['user','conversation.talked.user','conversation.membres','conversation.lastMessage']);
+        $conversation = $conversation->load(['talked.user','membres.user','lastMessage']);
+        if ($conversation->type == 'prive') {
+            NewMessage::dispatch($message,$conversation,$conversation->talked->user);
+        }else{
+            foreach ($conversation->membres as $membre) {
+                if ($membre->user_id != Auth::id()) {
+                    NewMessage::dispatch($message,$conversation,$membre->user);
+                }
+            }
+        }
         return $this->sendResponse(true,$message,'Message creer');
     }
 }

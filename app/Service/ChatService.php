@@ -16,7 +16,7 @@ class ChatService
 
     public function createConversation($name = null,$type=null) {
         $conversation = Conversation::create([
-            'name' => isset($name) ? $name : 'sera' ,
+            'name' => isset($name) ? $name : 'groupe '.uniqid() ,
             'type' => isset($type) ? $type : 'prive',
         ]);
         return $conversation ;
@@ -59,7 +59,7 @@ class ChatService
 
         $conversationGroupe = Conversation::where('type','groupe')->whereHas('membres',function ($q) use($auth) {
             $q->where('user_id',$auth->id);
-        })->with('lastMessage','membres')->orderByDesc(function ($query) {
+        })->with('lastMessage','membres.user')->orderByDesc(function ($query) {
             $query->select('created_at')
                 ->from('messages')
                 ->whereColumn('conversation_id', 'conversations.id')

@@ -8,6 +8,7 @@ use App\Service\AuthService;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NewUserJoinedPresence;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,7 @@ class AuthController extends Controller
         
             if (Auth::attempt($request->all())) {
                 $user = Auth::user();
+                event(new NewUserJoinedPresence('connected',$user));
                 return  $this->finalResponse($user);
             }
             $error[] = "mot de passe invalide";
