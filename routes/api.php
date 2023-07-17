@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Broadcast;
 // Route::get('/user', function (Request $request) {
 //     return auth()->user();
 // })->middleware('auth:sanctum');
-Broadcast::routes(['middleware' => ['auth:sanctum']]);
+
+// Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::get('/unauth',[AuthController::class,'notAuth'])->name('not-auth');
 Route::post('/connexion',[AuthController::class,'login'])->name('post.login');
