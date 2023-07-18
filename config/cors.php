@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['https://dev.rubycorp.fr/api/connexion', 'sanctum/csrf-cookie','api'],
+    'paths' => ['api/connexion', 'sanctum/csrf-cookie','api'],
 
     'allowed_methods' => ['*'],
 
