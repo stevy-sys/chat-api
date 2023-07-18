@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Broadcast;
 // Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::get('/unauth',[AuthController::class,'notAuth'])->name('not-auth');
-Route::post('/connexion',[AuthController::class,'login'])->name('post.login');
+Route::post('/connexion',[AuthController::class,'login'])->middleware(['cors'])->name('post.login');
 Route::post('/register',[AuthController::class,'register'])->name('register');
 
 Route::middleware('auth:sanctum')->group(function() {
