@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class Cors
 {
@@ -21,7 +22,9 @@ class Cors
         $response->header('Access-Control-Allow-Origin', '*');
         $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         $response->header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, X-Token-Auth, Authorization');
-
+        if ($response->status() >= 400) {
+            Log::error('CORS Middleware Error: ' . $response->getContent());
+        }
         return $response;
     }
 }
