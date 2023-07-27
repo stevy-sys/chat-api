@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Broadcast;
 // })->middleware('auth:sanctum');
 
 // Broadcast::routes(['middleware' => ['auth:sanctum']]);
-Route::get('/test', function () {
+Route::post('/test', function () {
     return response()->json([
         'sataus' => 'ok'
     ]);
