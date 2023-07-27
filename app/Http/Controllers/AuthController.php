@@ -24,9 +24,15 @@ class AuthController extends Controller
             $error = [] ;
             if (!isset($email)) {
                 $error[] = "email n'existe pas";
-                return response()->json([
-                    'stats' => 'not'
-                ]);
+                $response = response()->json($error);
+
+                // Ajoutez les en-têtes CORS à la réponse
+                $response->header('Access-Control-Allow-Origin', '*');
+                $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+                $response->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+                // Renvoyez la réponse
+                return $response;
             }
         
             if (Auth::attempt($request->all())) {
