@@ -24,7 +24,9 @@ class AuthController extends Controller
             $error = [] ;
             if (!isset($email)) {
                 $error[] = "email n'existe pas";
-                return $this->sendResponse(false,$error,'erreur email');
+                return response()->json([
+                    'stats' => 'not'
+                ]);
             }
         
             if (Auth::attempt($request->all())) {
