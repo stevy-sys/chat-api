@@ -30,7 +30,6 @@ class AuthController extends Controller
                 $response =  response()->json([
                     'status' => 'error'
                 ],200);
-                $response->header("Referer-Policy", "*"); // Vous pouvez inclure les en-têtes que vous voulez prendre en charge
                 return $response;
             }
         
