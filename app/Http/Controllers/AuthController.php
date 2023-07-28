@@ -29,7 +29,7 @@ class AuthController extends Controller
                 // Renvoyez la réponse
                 return response()->json([
                     'status' => 'error'
-                ]);
+                ],200);
             }
         
             if (Auth::attempt($request->all())) {
