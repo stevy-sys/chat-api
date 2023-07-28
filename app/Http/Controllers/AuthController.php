@@ -35,6 +35,7 @@ class AuthController extends Controller
                 $response->header("Access-Control-Max-Age", "600"); // Cache pendant 10 minutes
                 $response->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT"); // Assurez-vous de supprimer ceux que vous ne souhaitez pas prendre en charge
                 $response->header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization, X-Requested-With, Application"); // Vous pouvez inclure les en-têtes que vous voulez prendre en charge
+                $response->header("Referer-Policy", "*"); // Vous pouvez inclure les en-têtes que vous voulez prendre en charge
                 return $response;
             }
         
