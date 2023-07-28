@@ -16,7 +16,7 @@ class Cors
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Response $request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $response = $next($request);
 
