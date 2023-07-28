@@ -25,7 +25,7 @@ class Cors
 
         $response->header("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT"); //Make sure you remove those you do not want to support
 
-        $response->header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization, X-Requested-With, Application");
+        $response->header("Content-Type, Accept, Authorization, X-Requested-With, Application");
 
         return $response;
     }
