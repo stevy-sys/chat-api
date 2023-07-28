@@ -26,7 +26,7 @@ class Cors
         $response->header("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT"); //Make sure you remove those you do not want to support
 
         $response->header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization, X-Requested-With, Application,access-control-allow-origin");
-
+        unset($response->headers['Referer-Policy']);
         return $response;
     }
 }
