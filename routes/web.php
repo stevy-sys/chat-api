@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/test', function () {
+Route::get('/test', function () {
     return response()->json([
         'status' => 'ok'
     ]);
