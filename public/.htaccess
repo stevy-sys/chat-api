@@ -19,7 +19,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Origin "http://localhost:5173"
     Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
     Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
     Header always set Access-Control-Allow-Credentials "true"
