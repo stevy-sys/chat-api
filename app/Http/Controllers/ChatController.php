@@ -36,12 +36,25 @@ class ChatController extends Controller
         $message = null ;
         $conversation = null;
         if (!isset($request->conversation_id)) {
-            $conversation = $this->chatService->createConversation($request->name,$request->type);
-            $membres[] = ['user_id' => Auth::id()] ;
-            foreach ($request->user_id as $user_id) {
-                $membres[] = ['user_id' => $user_id];
+            if (($request->type == 'prive')) {
+                $user = User::find($request->user_id[0]);
+                $conversation = $this->chatService->verifConversationPrive($user,Auth::user());
+                if (!isset($conversation)) {
+                    $conversation = $this->chatService->createConversation($request->name,$request->type);
+                    $membres[] = ['user_id' => Auth::id()] ;
+                    foreach ($request->user_id as $user_id) {
+                        $membres[] = ['user_id' => $user_id];
+                    }
+                    $membres = $this->chatService->createMembre($membres,$conversation);
+                }
+            }else{
+                $conversation = $this->chatService->createConversation($request->name,$request->type);
+                $membres[] = ['user_id' => Auth::id()] ;
+                foreach ($request->user_id as $user_id) {
+                    $membres[] = ['user_id' => $user_id];
+                }
+                $membres = $this->chatService->createMembre($membres,$conversation);
             }
-            $membres = $this->chatService->createMembre($membres,$conversation);
             $message = $this->chatService->createMessage($conversation,$request->message,Auth::user());
         }else{
             $conversation = Conversation::find($request->conversation_id);

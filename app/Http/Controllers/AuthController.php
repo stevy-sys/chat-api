@@ -63,4 +63,11 @@ class AuthController extends Controller
     public function notAuth() {
         return response()->json(['message' => 'unauthorized'], 401);
     }
+
+    public function deconnect() {
+        event(new NewUserJoinedPresence('deconnected', Auth::user()));
+        return response()->json([
+            'message' => 'deconnecte'
+        ]);
+    }
 }

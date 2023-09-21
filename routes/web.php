@@ -21,20 +21,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return response()->json([
-        'status' => 'ok'
-    ]);
-});
-
-Route::get('/unauth',[AuthController::class,'notAuth'])->name('not-auth');
-Route::post('/connexion',[AuthController::class,'login'])->name('post.login');
-Route::post('/register',[AuthController::class,'register'])->name('register');
-
-Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/all-user',[ChatController::class,'allUsers'])->name('users.index');
-    Route::get('/all-conversation',[ChatController::class,'allConversation'])->name('conversation.index');
-    Route::get('/all-discussion/{idConversation}',[ChatController::class,'allDiscussion'])->name('conversation.show');
-    Route::post('/send-message',[ChatController::class,'createMessage'])->name('message.store');
-});
 
