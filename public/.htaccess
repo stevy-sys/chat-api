@@ -19,9 +19,9 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    Header always set Access-Control-Allow-Origin "https://chat-vue-six.vercel.app"
-    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
-    Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
-    Header always set Access-Control-Allow-Credentials "true"
-    
+    # Header always set Access-Control-Allow-Origin "https://chat-vue-six.vercel.app"
+    # Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    # Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+    # Header always set Access-Control-Allow-Credentials "true"
+
 </IfModule>
