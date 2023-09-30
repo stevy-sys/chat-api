@@ -5,6 +5,7 @@
 // header('Referer-Policy: *');
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Models\Conversation;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', function () {
+    dd(Conversation::all());
     return view('welcome');
 });
 
