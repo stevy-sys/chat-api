@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 
-Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::get('/user', function (Request $request) {
     return auth()->user();
@@ -42,3 +41,4 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/all-discussion/{idConversation}',[ChatController::class,'allDiscussion'])->name('conversation.show');
     Route::post('/send-message',[ChatController::class,'createMessage'])->name('message.store');
 });
+Broadcast::routes(['middleware' => ['auth:sanctum']]);

@@ -7,13 +7,12 @@ return [
             'api' => [
                 'title' => 'L5 Swagger UI',
             ],
-            'url' => '/api/docs',
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'api/documentation',
+                'api' => 'documentation',
             ],
             'paths' => [
                 /*
