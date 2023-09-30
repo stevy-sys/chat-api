@@ -1,4 +1,7 @@
-RewriteEngine on
-RewriteCond %{REQUEST_URI} !^public
-RewriteRule ^(.*)$ public/$1 [L]
+RewriteEngine On
 
+# Exclure la route de documentation Swagger
+RewriteCond %{REQUEST_URI} !^/api/documentation
+
+# Rediriger toutes les autres demandes vers le répertoire "public"
+RewriteRule ^(.*)$ public/$1 [L]
