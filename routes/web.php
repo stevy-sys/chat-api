@@ -19,7 +19,6 @@ use App\Models\Conversation;
 */
 
 Route::get('/', function () {
-    dd(Conversation::all());
     return view('welcome');
 });
 
