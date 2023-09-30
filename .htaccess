@@ -1,12 +1,4 @@
 RewriteEngine On
 
-# Rediriger toutes les requêtes vers le répertoire public, sauf pour les fichiers existants
-RewriteCond %{REQUEST_URI} !^/public/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /public/$1 [L]
-
-# Rediriger les requêtes vers index.php pour que Laravel gère les routes
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^public/index.php [L]
+# Rediriger toutes les requêtes vers le répertoire public
+RewriteRule ^(.*)$ public/$1 [L]
