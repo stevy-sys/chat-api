@@ -29,24 +29,6 @@ return [
     */
 
     'connections' => [
-        'pusher' => [
-            'driver' => 'pusher',
-            'key' => env('PUSHER_APP_KEY'),
-            'secret' => env('PUSHER_APP_SECRET'),
-            'app_id' => env('PUSHER_APP_ID'),
-            'options' => [
-                'cluster' => env('PUSHER_APP_CLUSTER'),
-                'encrypted' => true, // Vous pouvez modifier ceci à true si votre compte Pusher utilise SSL (recommandé pour la sécurité en ligne)
-                'scheme' => 'https',
-                'host' => 'api.pusherapp.com',
-                'port' => 443,
-                'curl_options' => [
-                    CURLOPT_SSL_VERIFYHOST => false,
-                    CURLOPT_SSL_VERIFYPEER => false,
-                ],
-            ],
-        ],
-
         // 'pusher' => [
         //     'driver' => 'pusher',
         //     'key' => env('PUSHER_APP_KEY'),
@@ -54,12 +36,30 @@ return [
         //     'app_id' => env('PUSHER_APP_ID'),
         //     'options' => [
         //         'cluster' => env('PUSHER_APP_CLUSTER'),
-        //         'encrypted' => false,
-        //         'host' => '127.0.0.1',
-        //         'port' => 6001,
-        //         'scheme' => 'http'
+        //         'encrypted' => true, // Vous pouvez modifier ceci à true si votre compte Pusher utilise SSL (recommandé pour la sécurité en ligne)
+        //         'scheme' => 'https',
+        //         'host' => 'api.pusherapp.com',
+        //         'port' => 443,
+        //         'curl_options' => [
+        //             CURLOPT_SSL_VERIFYHOST => false,
+        //             CURLOPT_SSL_VERIFYPEER => false,
+        //         ],
         //     ],
         // ],
+
+        'pusher' => [
+            'driver' => 'pusher',
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
+            'options' => [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'encrypted' => false,
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'http'
+            ],
+        ],
 
         'ably' => [
             'driver' => 'ably',

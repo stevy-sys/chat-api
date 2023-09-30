@@ -17,21 +17,135 @@ class ChatController extends Controller
         $this->chatService = new ChatService();
     }
 
+
+    /**
+     * @OA\Get(
+     *      path="/api/all-user",
+     *      operationId="allUsers",
+     *      tags={"User"},
+     *      summary="Recupere tout les user",
+     *      description="Recupere tout les users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Recupere tout user",
+     *          @OA\JsonContent(
+     *              type="object",
+     *          )
+     *      )
+     * )
+     */
     public function allUsers() {
         $users = $this->chatService->getAllUser();
         return $this->sendResponse(true,$users,'All Users');
     }
 
+
+
+    /**
+     * @OA\Get(
+     *      path="/api/all-conversation",
+     *      operationId="allConversation",
+     *      tags={"Chat"},
+     *      summary="Recupere tout les conversations",
+     *      description="Recupere tout les conversations",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Recupere tout conversations",
+     *          @OA\JsonContent(
+     *              type="object",
+     *          )
+     *      )
+     * )
+     */
     public function allConversation() {
         $conversation = $this->chatService->listConversation(Auth::user());
         return $this->sendResponse(true,$conversation,'Conversation');
     }
 
+
+    /**
+     * @OA\Get(
+     *      path="/api/all-discussion/{idConversation}",
+     *      operationId="allDiscussion",
+     *      tags={"Chat"},
+     *      summary="Obtenir tout les message",
+     *      description="Retourne tout les message a partir une conversation",
+     *      @OA\Parameter(
+     *          name="idConversation",
+     *          in="path",
+     *          required=true,
+     *          description="ID du conversation",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Liste des messages d une conversation",
+     *          @OA\JsonContent(
+     *              type="object"
+     *          )
+     *      )
+     * )
+     */
     public function allDiscussion(Conversation $idConversation) {
         $conversation = $this->chatService->listMessage($idConversation);
         return $this->sendResponse(true,$conversation,'Conversation');
     }
 
+
+
+
+
+    /**
+     * @OA\Post(
+     *      path="/api/send-message",
+     *      operationId="createMessage",
+     *      tags={"Chat"},
+     *      summary="Envoyer un message",
+     *      description="Envoyer un message",
+     *      @OA\RequestBody(
+     *          description="Données du utilisatuer à envoyer",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="conversation_id",
+     *                  type="integer",
+     *                  example="1"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="mon message"
+     *              ),
+     *              @OA\Property(
+     *                  property="type",
+     *                  type="string",
+     *                  example="tapez 'prive' ou 'groupe'"
+     *              ),
+     *              @OA\Property(
+     *                  property="user_id",
+     *                  type="array",
+     *                  @OA\Items(type="integer"),
+     *                  example="[1,2,3]"
+     *              ),
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string",
+     *                  example="sera"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Envoyer un message",
+     *          @OA\JsonContent(
+     *              type="object",
+     *          )
+     *      ),
+     * )
+     */
     public function createMessage(Request $request) {
         $message = null ;
         $conversation = null;

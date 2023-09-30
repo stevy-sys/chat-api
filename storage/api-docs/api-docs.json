@@ -1,0 +1,285 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "chat-api",
+        "description": "api de chat entre utilisateur",
+        "contact": {
+            "name": "stevy",
+            "email": "stevyralambomanana@gmail.com"
+        },
+        "license": {
+            "name": "Licence de l'API",
+            "url": "URL de la licence"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/connexion": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Connexion utilisateur",
+                "description": "Retourne le donnee de user avec token authentification",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Données du utilisatuer à envoyer",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "JohnDoe@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "votre mot de passe"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User connecter",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "inscription de utilisateur",
+                "description": "Inscription de nouvel utilisateur",
+                "operationId": "register",
+                "requestBody": {
+                    "description": "Données du utilisatuer à envoyer",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "JohnDoe@gmail.com"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "JohnDoe"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "votre mot de passe"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connexion avec success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/deconnect": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Recupere tout les amis",
+                "description": "Recupere tout les amis que jai accepter",
+                "operationId": "deconnect",
+                "responses": {
+                    "200": {
+                        "description": "Recupere tout les amis",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/all-user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Recupere tout les user",
+                "description": "Recupere tout les users",
+                "operationId": "allUsers",
+                "responses": {
+                    "200": {
+                        "description": "Recupere tout user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/all-conversation": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Recupere tout les conversations",
+                "description": "Recupere tout les conversations",
+                "operationId": "allConversation",
+                "responses": {
+                    "200": {
+                        "description": "Recupere tout conversations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/all-discussion/{idConversation}": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Obtenir tout les message",
+                "description": "Retourne tout les message a partir une conversation",
+                "operationId": "allDiscussion",
+                "parameters": [
+                    {
+                        "name": "idConversation",
+                        "in": "path",
+                        "description": "ID du conversation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des messages d une conversation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/send-message": {
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Envoyer un message",
+                "description": "Envoyer un message",
+                "operationId": "createMessage",
+                "requestBody": {
+                    "description": "Données du utilisatuer à envoyer",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "conversation_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": "mon message"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "tapez 'prive' ou 'groupe'"
+                                    },
+                                    "user_id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": "[1,2,3]"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "sera"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Envoyer un message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer votre_token)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "sanctum": [
+                "read",
+                "write"
+            ]
+        }
+    ]
+}

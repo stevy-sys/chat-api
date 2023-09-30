@@ -10,6 +10,21 @@ use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewUserJoinedPresence;
 
+/**
+ * @OA\Info(
+ *     title="chat-api",
+ *     version="1.0.0",
+ *     description="api de chat entre utilisateur",
+ *     @OA\Contact(
+ *         email="stevyralambomanana@gmail.com",
+ *         name="stevy"
+ *     ),
+ *     @OA\License(
+ *         name="Licence de l'API",
+ *         url="URL de la licence"
+ *     )
+ * )
+ */
 class AuthController extends Controller
 {
     public $authService ;
@@ -18,6 +33,42 @@ class AuthController extends Controller
         $this->authService = new AuthService();
     }
 
+
+
+    /**
+     * @OA\Post(
+     *      path="/api/connexion",
+     *      operationId="login",
+     *      tags={"Authentication"},
+     *      summary="Connexion utilisateur",
+     *      description="Retourne le donnee de user avec token authentification",
+     *      @OA\RequestBody(
+     *          description="Données du utilisatuer à envoyer",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="email",
+     *                  type="string",
+     *                  example="JohnDoe@gmail.com"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  type="string",
+     *                  example="votre mot de passe"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="User connecter",
+     *          @OA\JsonContent(
+     *              type="object",
+     *          )
+     *      ),
+     *      security={}
+     * )
+     */
     public function login(Request $request){
         try {
             $email = User::where('email',$request->input('email'))->first();
@@ -46,6 +97,46 @@ class AuthController extends Controller
         }
     }
 
+
+    /**
+     * @OA\Post(
+     *      path="/api/register",
+     *      operationId="register",
+     *      tags={"Authentication"},
+     *      summary="inscription de utilisateur",
+     *      description="Inscription de nouvel utilisateur",
+     *      @OA\RequestBody(
+     *          description="Données du utilisatuer à envoyer",
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="email",
+     *                  type="string",
+     *                  example="JohnDoe@gmail.com"
+     *              ),
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string",
+     *                  example="JohnDoe"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  type="string",
+     *                  example="votre mot de passe"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Connexion avec success",
+     *          @OA\JsonContent(
+     *              type="object",
+     *          )
+     *      ),
+     *      security={}
+     * )
+     */
     public function register(Request $request) {
         $error = $this->authService->validateRegister($request);
         if (count($error) > 0) {
@@ -64,6 +155,22 @@ class AuthController extends Controller
         return response()->json(['message' => 'unauthorized'], 401);
     }
 
+     /**
+     * @OA\Get(
+     *      path="/api/deconnect",
+     *      operationId="deconnect",
+     *      tags={"Authentication"},
+     *      summary="Recupere tout les amis",
+     *      description="Recupere tout les amis que jai accepter",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Recupere tout les amis",
+     *          @OA\JsonContent(
+     *              type="object",
+     *          )
+     *      )
+     * )
+     */
     public function deconnect() {
         event(new NewUserJoinedPresence('deconnected', Auth::user()));
         return response()->json([
